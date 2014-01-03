@@ -9,9 +9,9 @@ namespace Authenticator.Core
             if (original == null)
                 throw new ArgumentNullException("original");
             
-            T[] copy = new T[original.Length];
+            var copy = new T[original.Length];
             original.CopyTo(copy,0);
             return copy;
-        }
+        }   
     }
 }
