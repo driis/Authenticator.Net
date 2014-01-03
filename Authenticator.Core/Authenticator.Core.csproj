@@ -34,9 +34,10 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CounterBasedOneTimePasswordGenerator.cs" />
     <Compile Include="HmacHash.cs" />
     <Compile Include="HashExtensions.cs" />
-    <Compile Include="IOTPGenerator.cs" />
+    <Compile Include="IOneTimePasswordGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

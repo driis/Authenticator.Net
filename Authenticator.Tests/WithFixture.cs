@@ -18,5 +18,10 @@ namespace Authenticator.Tests
         {
             _fixture = new Lazy<Fixture>();
         }
+
+        public T A<T>()
+        {
+            return Fixture.Create<T>();
+        }
     }
 }

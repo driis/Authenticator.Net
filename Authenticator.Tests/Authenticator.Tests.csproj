@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CounterBasedOneTimePasswordGeneratorTests.cs" />
     <Compile Include="HashExtensionsTests.cs" />
     <Compile Include="HmachashTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
