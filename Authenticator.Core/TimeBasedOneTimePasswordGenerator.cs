@@ -8,6 +8,7 @@ namespace Authenticator.Core
         private readonly DateTime _timeZero;
         private readonly int _stepIntervalSeconds;
         private readonly CounterBasedOneTimePasswordGenerator _inner;
+
         public TimeBasedOneTimePasswordGenerator(byte[] secret, int passwordLength, Func<DateTime> currentTime) : this(secret, passwordLength, currentTime, new DateTime(1970,1,1,0,0,0), 30)
         {            
         }
@@ -23,8 +24,8 @@ namespace Authenticator.Core
         private long CurrentTimeAsCounterValue()
         {
             DateTime instant = _currentTime();
-            var timeSinceZero = instant - _timeZero;
-            var secondsSinceZero = (long) timeSinceZero.TotalSeconds;
+            TimeSpan timeSinceZero = instant - _timeZero;
+            long secondsSinceZero = (long) timeSinceZero.TotalSeconds;
             return secondsSinceZero/_stepIntervalSeconds;
         }
 

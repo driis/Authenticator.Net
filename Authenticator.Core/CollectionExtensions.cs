@@ -2,7 +2,7 @@
 
 namespace Authenticator.Core
 {
-    public static class HashExtensions
+    public static class CollectionExtensions
     {
         public static T[] Copy<T>(this T[] original)
         {
