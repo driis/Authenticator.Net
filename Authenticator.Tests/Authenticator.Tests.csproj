@@ -51,6 +51,7 @@
     <Compile Include="HashExtensionsTests.cs" />
     <Compile Include="HmachashTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TimeBasedOneTimePasswordGeneratorTests.cs" />
     <Compile Include="WithFixture.cs" />
   </ItemGroup>
   <ItemGroup>
