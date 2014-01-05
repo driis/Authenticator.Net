@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Linq;
 using System.Security.Cryptography;
 
 namespace Authenticator.Core
@@ -21,7 +22,7 @@ namespace Authenticator.Core
         {
             long c = _counter();
             var hashAlgorithm = new HMACSHA1(_secret);
-            byte[] countBytes = BitConverter.GetBytes(c);
+            byte[] countBytes = BitConverter.GetBytes(c).Reverse().ToArray();
             var hash = new HmacHash(hashAlgorithm.ComputeHash(countBytes));
             int passwordValue = hash.TruncateToDigits(_digits);
             return passwordValue.ToString("D" + _digits, CultureInfo.InvariantCulture);
