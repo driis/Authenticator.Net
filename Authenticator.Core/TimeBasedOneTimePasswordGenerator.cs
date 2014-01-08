@@ -9,16 +9,16 @@ namespace Authenticator.Core
         private readonly int _stepIntervalSeconds;
         private readonly CounterBasedOneTimePasswordGenerator _inner;
 
-        public TimeBasedOneTimePasswordGenerator(byte[] secret, int passwordLength, Func<DateTime> currentTime) : this(secret, passwordLength, currentTime, new DateTime(1970,1,1,0,0,0), 30)
+        public TimeBasedOneTimePasswordGenerator(byte[] secret, int passwordLength, Func<DateTime> currentTime, HashMode hashMode = HashMode.HMACSHA1) : this(secret, passwordLength, currentTime, new DateTime(1970,1,1,0,0,0), 30, hashMode)
         {            
         }
 
-        private TimeBasedOneTimePasswordGenerator(byte[] secret, int passwordLength, Func<DateTime> currentTime, DateTime timeZero, int stepIntervalSeconds)
+        private TimeBasedOneTimePasswordGenerator(byte[] secret, int passwordLength, Func<DateTime> currentTime, DateTime timeZero, int stepIntervalSeconds = 30, HashMode hashMode = HashMode.HMACSHA1)
         {
             _currentTime = currentTime;
             _timeZero = timeZero;
             _stepIntervalSeconds = stepIntervalSeconds;
-            _inner = new CounterBasedOneTimePasswordGenerator(secret,passwordLength,CurrentTimeAsCounterValue);
+            _inner = new CounterBasedOneTimePasswordGenerator(secret,passwordLength,CurrentTimeAsCounterValue, hashMode);
         }
 
         private long CurrentTimeAsCounterValue()

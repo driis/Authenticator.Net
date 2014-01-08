@@ -21,16 +21,16 @@ namespace Authenticator.Tests
         {
             Assert.That(() => new HmacHash(null), Throws.InstanceOf<ArgumentNullException>());
         }
-
+        
         [Test]
+        [TestCase(0)]
         [TestCase(1)]
         [TestCase(19)]
-        [TestCase(21)]
         public void Ctor_WrongLength_ThrowsArgumentException(int length)
         {
-            Assert.That(() => new HmacHash(Fixture.CreateMany<byte>(length).ToArray()), Throws.ArgumentException);
+            Assert.That(() => new HmacHash(Fixture.CreateMany<byte>(length).ToArray()), Throws.InstanceOf<ArgumentOutOfRangeException>());
         }
-
+        
         [Test]
         public void Ctor_CorrectLength_DoesNotThrow()
         {

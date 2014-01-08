@@ -6,7 +6,7 @@ namespace Authenticator.Core
 {
     public class HmacHash
     {
-        private const int Length = 20;
+        private const int MinimumLength = 20;
         private readonly byte[] _data;
 
         public HmacHash(IEnumerable<byte> data) : this(data.ToArray()) {}
@@ -15,8 +15,8 @@ namespace Authenticator.Core
         {
             if (data == null)
                 throw new ArgumentNullException("data");
-            if (data.Length != Length)
-                throw new ArgumentException("Data must be exactly 160 bits (20 bytes).");
+            if (data.Length < MinimumLength)
+                throw new ArgumentOutOfRangeException("data", "MinimumLength of hash is invalid.");
 
             _data = data.Copy();
         }
@@ -31,7 +31,7 @@ namespace Authenticator.Core
             if (digits < 6 || digits > 8)
                 throw new ArgumentOutOfRangeException("digits", "Number of digits must be between 6 and 8");
 
-            int offset = _data[19] & 0x0f;
+            int offset = _data[_data.Length - 1] & 0x0f;
 
             int value = (_data[offset] &0x7f) << 24 | 
                 _data[offset + 1] << 16 | 

@@ -35,6 +35,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CounterBasedOneTimePasswordGenerator.cs" />
+    <Compile Include="HashMode.cs" />
     <Compile Include="HmacHash.cs" />
     <Compile Include="CollectionExtensions.cs" />
     <Compile Include="IOneTimePasswordGenerator.cs" />

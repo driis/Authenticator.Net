@@ -9,21 +9,35 @@ namespace Authenticator.Core
     {
         private readonly int _digits;
         private readonly Func<long> _counter;
-        private readonly byte[] _secret;
+        private readonly HMAC _hashAlgorithm;
 
-        public CounterBasedOneTimePasswordGenerator(byte[] secret, int digits, Func<long> counter)
+        public CounterBasedOneTimePasswordGenerator(byte[] secret, int digits, Func<long> counter) : this(secret, digits, counter, HashMode.HMACSHA1) 
+        {}
+
+        internal CounterBasedOneTimePasswordGenerator(byte[] secret, int digits, Func<long> counter, HashMode hashMode)
         {
-            _secret = secret.Copy();
             _digits = digits;
             _counter = counter;
+            secret = secret.Copy();
+            switch (hashMode)
+            {
+                case HashMode.HMACSHA1:
+                    _hashAlgorithm = new HMACSHA1(secret);
+                    break;
+                case HashMode.HMACSHA256:
+                    _hashAlgorithm = new HMACSHA256(secret);
+                    break;
+                case HashMode.HMACSHA512:
+                    _hashAlgorithm = new HMACSHA512(secret);
+                    break;
+            }
         }
 
         public string NextPassword()
         {
-            long c = _counter();
-            var hashAlgorithm = new HMACSHA1(_secret);
+            long c = _counter();            
             byte[] countBytes = BitConverter.GetBytes(c).Reverse().ToArray();
-            var hash = new HmacHash(hashAlgorithm.ComputeHash(countBytes));
+            var hash = new HmacHash(_hashAlgorithm.ComputeHash(countBytes));
             int passwordValue = hash.TruncateToDigits(_digits);
             return passwordValue.ToString("D" + _digits, CultureInfo.InvariantCulture);
         }
