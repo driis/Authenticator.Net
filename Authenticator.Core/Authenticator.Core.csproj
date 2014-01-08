@@ -34,6 +34,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base32.cs" />
     <Compile Include="CounterBasedOneTimePasswordGenerator.cs" />
     <Compile Include="HashMode.cs" />
     <Compile Include="HmacHash.cs" />
