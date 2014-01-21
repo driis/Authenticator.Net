@@ -46,5 +46,43 @@ namespace Authenticator.Core
 
             return result;
         }
+
+        public static string EncodeBytes(byte[] data)
+        {
+            int bitLength = data.Length*8;            
+            int encodedCharCount = bitLength/5 + (bitLength % 5 == 0 ? 0 : 1);
+            int blockCount = (data.Length/5) + (data.Length%5 == 0 ? 0 : 1);
+            int padChars = 8 - (encodedCharCount%8 == 0 ? 8 : encodedCharCount % 8);
+            var buffer = new char[encodedCharCount + padChars];
+
+            int bufferPos = 0;
+            for (int block = 0; block < blockCount ; block++)
+            {
+                long acc = 0;
+                int bytesMoved = 0;
+                for (int ch = block*5; ch < (block + 1)*5 && ch < data.Length ; ch++)
+                {
+                    acc <<= 8;
+                    acc |= data[ch];
+                    bytesMoved++;
+                }
+
+                int bitsToMove = bytesMoved*8;
+                int zeroPadLastByte = bitsToMove%5 == 0 ? 0 : 5 - (bitsToMove%5);
+                acc <<= zeroPadLastByte;
+                bitsToMove += zeroPadLastByte;
+                
+                while(bitsToMove > 0)
+                {
+                    bitsToMove -= 5;                    
+                    long idx = (acc >> bitsToMove) & 0x1f;
+                    buffer[bufferPos++] = characters[idx];
+                }
+            }
+            while (bufferPos < encodedCharCount + padChars)
+                buffer[bufferPos++] = Pad;
+
+            return new String(buffer);            
+        }
     }
 }

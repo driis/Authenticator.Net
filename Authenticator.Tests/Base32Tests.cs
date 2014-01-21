@@ -21,5 +21,20 @@ namespace Authenticator.Tests
             string actual = Encoding.ASCII.GetString(result);
             Assert.That(actual, Is.EqualTo(expected));
         }
+
+        [Test]
+        [TestCase("", "")]
+        [TestCase("fooba", "MZXW6YTB")]
+        [TestCase("foobafooba", "MZXW6YTBMZXW6YTB")]
+        [TestCase("f", "MY======")]
+        [TestCase("fo", "MZXQ====")]
+        public void Base32_CanEncodeBytes(string data, string expected)
+        {
+            byte[] buffer = Encoding.ASCII.GetBytes(data);
+
+            string result = Base32.EncodeBytes(buffer);
+
+            Assert.That(result, Is.EqualTo(expected));
+        }
     }
 }
