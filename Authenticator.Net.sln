@@ -14,6 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{74D7DC
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authenticator.Net.ConsoleClient", "Authenticator.Net.ConsoleClient\Authenticator.Net.ConsoleClient.csproj", "{A0131A5F-2DD6-4EB6-9B05-AF498FEBBE52}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,6 +30,10 @@ Global
 		{D6A3D0D7-9720-483D-A508-B9879814F42A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6A3D0D7-9720-483D-A508-B9879814F42A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6A3D0D7-9720-483D-A508-B9879814F42A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0131A5F-2DD6-4EB6-9B05-AF498FEBBE52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0131A5F-2DD6-4EB6-9B05-AF498FEBBE52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0131A5F-2DD6-4EB6-9B05-AF498FEBBE52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0131A5F-2DD6-4EB6-9B05-AF498FEBBE52}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

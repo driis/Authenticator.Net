@@ -8,7 +8,7 @@ namespace Authenticator.Core
         private static readonly char[] characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567".ToArray();
         private const char Pad = '=';
 
-        public static byte[] BytesFromEncodedString(string encodedString)
+        public static byte[] DecodeFromString(string encodedString)
         {
             if (encodedString.Length % 8 != 0)
                 throw new ArgumentException ("Encoded data is not valid Base32.", "encodedString");

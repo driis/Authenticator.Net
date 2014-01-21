@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Security.Cryptography;
+using System.Text;
 using Authenticator.Core;
 using NUnit.Framework;
 
@@ -16,7 +17,7 @@ namespace Authenticator.Tests
         [TestCase("MZXQ====", "fo")]
         public void Base32_CanDecodeFromBase32String(string base32, string expected)
         {
-            byte[] result = Base32.BytesFromEncodedString(base32);
+            byte[] result = Base32.DecodeFromString(base32);
 
             string actual = Encoding.ASCII.GetString(result);
             Assert.That(actual, Is.EqualTo(expected));
@@ -35,6 +36,18 @@ namespace Authenticator.Tests
             string result = Base32.EncodeBytes(buffer);
 
             Assert.That(result, Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void Base32_SomeRandomData_CanRoundTripBase32Encoding()
+        {
+            byte[] data = new byte[910];
+            RNGCryptoServiceProvider.Create().GetBytes(data);
+
+            string base32 = Base32.EncodeBytes(data);
+            byte[] decoded = Base32.DecodeFromString(base32);
+
+            Assert.That(decoded, Is.EqualTo(data));
         }
     }
 }
