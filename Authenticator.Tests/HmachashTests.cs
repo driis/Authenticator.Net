@@ -2,12 +2,11 @@
 using System.Linq;
 using Authenticator.Core;
 using NUnit.Framework;
-using Ploeh.AutoFixture;
 
 namespace Authenticator.Tests
 {
     [TestFixture]
-    public class HmachashTests : WithFixture
+    public class HmachashTests 
     {
         // Example hash from RFC4226 section 5.4.
         private static readonly byte[] ExampleHash = {
@@ -28,7 +27,7 @@ namespace Authenticator.Tests
         [TestCase(19)]
         public void Ctor_WrongLength_ThrowsArgumentException(int length)
         {
-            Assert.That(() => new HmacHash(Fixture.CreateMany<byte>(length).ToArray()), Throws.InstanceOf<ArgumentOutOfRangeException>());
+            Assert.That(() => new HmacHash(Randomness.GetBytes(length)), Throws.InstanceOf<ArgumentOutOfRangeException>());
         }
         
         [Test]
@@ -42,18 +41,18 @@ namespace Authenticator.Tests
         [Test]
         public void Ctor_MutatingSourceArray_InnerDataIsPreserved()
         {
-            byte[] data = Fixture.CreateMany<byte>(HashLengthInBytes).ToArray();
+            byte[] data = Randomness.GetBytes(HashLengthInBytes);
             byte[] original = data.Copy();
             var hash = new HmacHash(data);
 
-            data[5] = Fixture.Create<byte>();
+            data[5] = 17;
             CollectionAssert.AreEqual(original, hash.RawBytes);
         }
 
         [Test]
         public void RawBytes_ReturnsCopyOfOriginalData()
         {
-            byte[] data = Fixture.CreateMany<byte>(HashLengthInBytes).ToArray();
+            byte[] data = Randomness.GetBytes(HashLengthInBytes).ToArray();
 
             var hash = new HmacHash(data);
 
@@ -61,7 +60,7 @@ namespace Authenticator.Tests
 
             Assert.That(rawBytes, Is.Not.SameAs(hash.RawBytes));
             CollectionAssert.AreEqual(rawBytes, hash.RawBytes);
-            rawBytes[9] = Fixture.Create<byte>();
+            rawBytes[9] = 90;
             CollectionAssert.AreEqual(data, hash.RawBytes);
         }
 

@@ -1,24 +1,23 @@
 ﻿using System;
 using System.Globalization;
-using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using Authenticator.Core;
 using NUnit.Framework;
-using Ploeh.AutoFixture;
 
 namespace Authenticator.Tests
 {
     [TestFixture]
-    public class TimeBasedOneTimePasswordGeneratorTests : WithFixture
+    public class TimeBasedOneTimePasswordGeneratorTests 
     {
+        
         [Test]
         [TestCase(6)]
         [TestCase(7)]
         [TestCase(8)]
         public void NextPassword_WithDigitCount_GeneratesPasswordWithCorrectNumberOfNumericDigits(int length)
         {
-            var sut = new TimeBasedOneTimePasswordGenerator(Fixture.CreateMany<byte>(20).ToArray(), length, () => DateTime.Now);
+            var sut = new TimeBasedOneTimePasswordGenerator(Randomness.GetBytes(20), length, () => DateTime.Now);
 
             string result = sut.NextPassword();
 

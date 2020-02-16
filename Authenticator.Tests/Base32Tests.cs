@@ -8,7 +8,6 @@ namespace Authenticator.Tests
     [TestFixture]
     public class Base32Tests
     {
-        [Test]
         [TestCase("", "")]
         [TestCase("mzxw6ytb", "fooba")]
         [TestCase("MZXW6YTB", "fooba")]
@@ -23,7 +22,6 @@ namespace Authenticator.Tests
             Assert.That(actual, Is.EqualTo(expected));
         }
 
-        [Test]
         [TestCase("", "")]
         [TestCase("fooba", "MZXW6YTB")]
         [TestCase("foobafooba", "MZXW6YTBMZXW6YTB")]

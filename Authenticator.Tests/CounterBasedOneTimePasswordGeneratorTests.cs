@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using Authenticator.Core;
 using NUnit.Framework;
-using Ploeh.AutoFixture;
 
 namespace Authenticator.Tests
 {
     [TestFixture]
-    public class CounterBasedOneTimePasswordGeneratorTests : WithFixture
+    public class CounterBasedOneTimePasswordGeneratorTests 
     {
         [Test]
         [TestCase(6)]
@@ -17,8 +15,8 @@ namespace Authenticator.Tests
         [TestCase(8)]
         public void NextPassword_GeneratesNumericPassword(int digits)
         {
-            var secret = Fixture.CreateMany<byte>(100).ToArray();
-            long count = A<long>();
+            var secret = Randomness.GetBytes(100);
+            long count = Randomness.GetLong();
             Func<long> counter = () => count++;
 
             var sut = new CounterBasedOneTimePasswordGenerator(secret, digits, counter);
@@ -32,8 +30,8 @@ namespace Authenticator.Tests
         [Test]
         public void NextPassword_SameCounterValue_ReturnsSamePassword()
         {
-            var secret = Fixture.CreateMany<byte>(100).ToArray();
-            long count = A<long>();
+            var secret = Randomness.GetBytes(100);
+            long count = Randomness.GetLong();
             Func<long> counter = () => count;
 
             var sut = new CounterBasedOneTimePasswordGenerator(secret, 6, counter);
@@ -47,8 +45,8 @@ namespace Authenticator.Tests
         [Test]
         public void NextPassword_IncrementingCounterValue_ReturnsDifferentPasswords()
         {
-            var secret = Fixture.CreateMany<byte>(100).ToArray();
-            long count = A<long>();
+            var secret = Randomness.GetBytes(100);
+            long count = Randomness.GetLong();
             Func<long> counter = () => count++;
 
             var sut = new CounterBasedOneTimePasswordGenerator(secret, 6, counter);
